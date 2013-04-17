@@ -33,6 +33,19 @@ namespace Ayls.WP8Toolkit.Collections
             group.Add(item);
         }
 
+        public ObservableCollection<string> Groups
+        {
+            get { return new ObservableCollection<string>(this.Select(x => x.Key).Distinct()); }
+        }
+
+        public IEnumerable<T> AllItems
+        {
+            get 
+            {
+                return this.SelectMany(x => x);
+            }
+        }
+
         public void AddGroupedItem(T item)
         {
             AddGroupedItem(this, item);
@@ -57,14 +70,6 @@ namespace Ayls.WP8Toolkit.Collections
         {
             RemoveGroupedItem(oldItem);
             AddGroupedItem(newItem);
-        }
-
-        public IEnumerable<T> AllItems
-        {
-            get 
-            {
-                return this.SelectMany(x => x);
-            }
         }
     }
 }

@@ -88,6 +88,8 @@
     <Compile Include="Collections\IGroupable.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Converters\BooleanToStringConverter.cs" />
+    <Compile Include="Converters\StringToUpperCaseConverter.cs" />
+    <Compile Include="Converters\StringToLowerCaseConverter.cs" />
     <Compile Include="Converters\FuncToStringConverter.cs" />
     <Compile Include="Converters\FuncToVisibilityConverter.cs" />
     <Compile Include="LiveTile\LiveTileStartupResult.cs" />
