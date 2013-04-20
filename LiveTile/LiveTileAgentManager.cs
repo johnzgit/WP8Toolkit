@@ -56,7 +56,7 @@ namespace Ayls.WP8Toolkit.LiveTile
 
                 // If debugging is enabled, use LaunchForTest to launch the agent in one minute.
 #if(DEBUG_AGENT)
-                ScheduledActionService.LaunchForTest(PeriodicTaskName, TimeSpan.FromSeconds(30));
+                ScheduledActionService.LaunchForTest(_settings.LiveTileAgentName, TimeSpan.FromSeconds(30));
 #endif
             }
             catch (InvalidOperationException exception)
