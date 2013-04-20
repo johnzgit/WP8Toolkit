@@ -96,7 +96,6 @@
     <Compile Include="LiveTile\ILiveTileSettings.cs" />
     <Compile Include="Storage\IsolatedStoragePersister.cs" />
     <Compile Include="Storage\IStoragePersistable.cs" />
-    <Compile Include="LiveTile\LiveTileAgentManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LiveTile\LiveTileHelper.cs" />
   </ItemGroup>
