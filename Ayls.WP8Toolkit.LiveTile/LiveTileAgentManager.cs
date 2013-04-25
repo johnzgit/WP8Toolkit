@@ -1,7 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using Ayls.WP8Toolkit.LiveTile.Extensions;
+using System.Linq;
 using Microsoft.Phone.Scheduler;
+using Microsoft.Phone.Shell;
 
 namespace Ayls.WP8Toolkit.LiveTile
 {
@@ -84,7 +85,7 @@ namespace Ayls.WP8Toolkit.LiveTile
         {
             try
             {
-                LiveTileHelper.UpdatePrimaryTileBadge(0);
+                UpdatePrimaryTileBadge(0);
                 ScheduledActionService.Remove(_settings.LiveTileAgentName);
             }
             catch
@@ -93,6 +94,14 @@ namespace Ayls.WP8Toolkit.LiveTile
             }
 
             IsAgentEnabled = false;
+        }
+
+        public static void UpdatePrimaryTileBadge(int count)
+        {
+            var primaryTileData = new FlipTileData();
+            primaryTileData.Count = count;
+            var primaryTile = ShellTile.ActiveTiles.First();
+            primaryTile.Update(primaryTileData);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

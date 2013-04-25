@@ -6,11 +6,11 @@ using System.Resources;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Ayls.WP8Toolkit.LiveTile.Extensions")]
-[assembly: AssemblyDescription("WP8 Toolkit Live Tile Extensions and Helpers")]
+[assembly: AssemblyTitle("Ayls.WP8Toolkit.LiveTile")]
+[assembly: AssemblyDescription("WP8 Toolkit Live Tile")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ayls Creations")]
-[assembly: AssemblyProduct("Ayls.WP8Toolkit.LiveTile.Extensions")]
+[assembly: AssemblyProduct("Ayls.WP8Toolkit.LiveTile")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
