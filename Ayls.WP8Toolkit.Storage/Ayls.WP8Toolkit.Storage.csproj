@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FBDE49F2-31AD-4E17-A036-8F5BB8DA8A50}</ProjectGuid>
+    <ProjectGuid>{82006491-F81E-4BAB-940A-A8CE25C30226}</ProjectGuid>
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Ayls.WP8Toolkit</RootNamespace>
-    <AssemblyName>Ayls.WP8Toolkit</AssemblyName>
+    <RootNamespace>Ayls.WP8Toolkit.Storage</RootNamespace>
+    <AssemblyName>Ayls.WP8Toolkit.Storage</AssemblyName>
     <TargetFrameworkIdentifier>WindowsPhone</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
@@ -83,18 +83,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Collections\GroupCollection.cs" />
-    <Compile Include="Collections\GroupItem.cs" />
-    <Compile Include="Collections\IGroupable.cs" />
-    <Compile Include="Commands\DelegateCommand.cs" />
-    <Compile Include="Converters\BooleanToStringConverter.cs" />
-    <Compile Include="Converters\StringToUpperCaseConverter.cs" />
-    <Compile Include="Converters\StringToLowerCaseConverter.cs" />
-    <Compile Include="Converters\FuncToStringConverter.cs" />
-    <Compile Include="Converters\FuncToVisibilityConverter.cs" />
-    <Compile Include="LiveTile\LiveTileStartupResult.cs" />
-    <Compile Include="LiveTile\ILiveTileSettings.cs" />
-    <Compile Include="LiveTile\LiveTileAgentManager.cs" />
+    <Compile Include="IsolatedStoragePersister.cs" />
+    <Compile Include="IStoragePersistable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -104,12 +94,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Ayls.WP8Toolkit.LiveTile.Extensions\Ayls.WP8Toolkit.LiveTile.Extensions.csproj">
-      <Project>{5E63B9DD-0BB4-47ED-B751-3E153016A1C1}</Project>
-      <Name>Ayls.WP8Toolkit.LiveTile.Extensions</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
