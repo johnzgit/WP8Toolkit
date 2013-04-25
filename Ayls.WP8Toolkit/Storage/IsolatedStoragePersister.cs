@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.IO.IsolatedStorage;
+using System.Threading;
 using Newtonsoft.Json;
 
 namespace Ayls.WP8Toolkit.Storage
@@ -9,13 +10,14 @@ namespace Ayls.WP8Toolkit.Storage
         private readonly TObject _persistedObject;
         private readonly IsolatedStorageFile _appData;
         private readonly string _filename;
-        private readonly object _fileLock = new object();
+        private readonly Mutex _mutex;
 
         public IsolatedStoragePersister(TObject persistedObject, IsolatedStorageFile appData, string filename)
         {
             _persistedObject = persistedObject;
             _appData = appData;
             _filename = filename;
+            _mutex = new Mutex(false, _filename);
         }
 
         public void Persist()
@@ -23,14 +25,15 @@ namespace Ayls.WP8Toolkit.Storage
             var data = _persistedObject.DataToPersist;
             var serializedData = JsonConvert.SerializeObject(data);
 
-            lock (_fileLock)
+            _mutex.WaitOne();
+
+            using (var sw = new StreamWriter(_appData.OpenFile(_filename, FileMode.Create)))
             {
-                using (var sw = new StreamWriter(_appData.OpenFile(_filename, FileMode.Create)))
-                {
-                    sw.Write(serializedData);
-                    sw.Close();
-                }
+                sw.Write(serializedData);
+                sw.Close();
             }
+            
+            _mutex.ReleaseMutex();
         }
 
         public void Hydrate()
@@ -41,14 +44,15 @@ namespace Ayls.WP8Toolkit.Storage
             }
 
             string serializedData;
-            lock (_fileLock)
+            _mutex.WaitOne();
+
+            using (var sr = new StreamReader(_appData.OpenFile(_filename, FileMode.Open)))
             {
-                using (var sr = new StreamReader(_appData.OpenFile(_filename, FileMode.Open)))
-                {
-                    serializedData = sr.ReadToEnd();
-                    sr.Close();
-                }
+                serializedData = sr.ReadToEnd();
+                sr.Close();
             }
+
+            _mutex.ReleaseMutex();
 
             try
             {

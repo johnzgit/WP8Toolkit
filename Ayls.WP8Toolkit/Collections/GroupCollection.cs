@@ -70,6 +70,19 @@ namespace Ayls.WP8Toolkit.Collections
         {
             RemoveGroupedItem(oldItem);
             AddGroupedItem(newItem);
+            CleanupGroups();
+        }
+
+        private void CleanupGroups()
+        {
+            for (int i = this.Count - 1; i >= 0; i--)
+            {
+                var group = this[i];
+                if (!group.Any())
+                {
+                    this.Remove(group);
+                }
+            }
         }
     }
 }
