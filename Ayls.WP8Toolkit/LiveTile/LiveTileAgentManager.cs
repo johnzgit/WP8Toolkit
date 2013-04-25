@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using Ayls.WP8Toolkit.LiveTile.Extensions;
 using Microsoft.Phone.Scheduler;
 
 namespace Ayls.WP8Toolkit.LiveTile

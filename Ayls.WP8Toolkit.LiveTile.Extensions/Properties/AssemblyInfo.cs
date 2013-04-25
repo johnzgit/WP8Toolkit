@@ -6,11 +6,11 @@ using System.Resources;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Ayls.WP8Toolkit")]
-[assembly: AssemblyDescription("WP8 Toolkit")]
+[assembly: AssemblyTitle("Ayls.WP8Toolkit.LiveTile.Extensions")]
+[assembly: AssemblyDescription("WP8 Toolkit Live Tile Extensions and Helpers")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ayls Creations")]
-[assembly: AssemblyProduct("Ayls.WP8Toolkit")]
+[assembly: AssemblyProduct("Ayls.WP8Toolkit.LiveTile.Extensions")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -21,7 +21,7 @@ using System.Resources;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("fbde49f2-31ad-4e17-a036-8f5bb8da8a50")]
+[assembly: Guid("5e63b9dd-0bb4-47ed-b751-3e153016a1c1")]
 
 // Version information for an assembly consists of the following four values:
 //

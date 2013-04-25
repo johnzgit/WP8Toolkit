@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.Phone.Shell;
 
-namespace Ayls.WP8Toolkit.LiveTile
+namespace Ayls.WP8Toolkit.LiveTile.Extensions
 {
     public class LiveTileHelper
     {

@@ -98,7 +98,6 @@
     <Compile Include="Storage\IStoragePersistable.cs" />
     <Compile Include="LiveTile\LiveTileAgentManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="LiveTile\LiveTileHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -107,6 +106,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ayls.WP8Toolkit.LiveTile.Extensions\Ayls.WP8Toolkit.LiveTile.Extensions.csproj">
+      <Project>{5E63B9DD-0BB4-47ED-B751-3E153016A1C1}</Project>
+      <Name>Ayls.WP8Toolkit.LiveTile.Extensions</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
