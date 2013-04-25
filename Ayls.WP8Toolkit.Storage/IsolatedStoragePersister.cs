@@ -59,7 +59,7 @@ namespace Ayls.WP8Toolkit.Storage
                 var data = JsonConvert.DeserializeObject<TData>(serializedData);
                 _persistedObject.InitializeFromPersistedData(data);
             }
-            catch (JsonReaderException)
+            catch (JsonException)
             {
             }
         }

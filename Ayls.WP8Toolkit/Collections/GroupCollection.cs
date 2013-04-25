@@ -21,7 +21,7 @@ namespace Ayls.WP8Toolkit.Collections
 
         private static void AddGroupedItem(GroupCollection<T> list, T item)
         {
-            var itemKey = item.GetGroup();
+            var itemKey = item.Group;
             var group = list.FirstOrDefault(x => x.Key == itemKey);
 
             if (group == null)
@@ -53,12 +53,12 @@ namespace Ayls.WP8Toolkit.Collections
 
         public void RemoveGroupedItem(T item)
         {
-            var itemKey = item.GetGroup();
+            var itemKey = item.Group;
             var group = this.FirstOrDefault(x => x.Key == itemKey);
 
             if (group != null)
             {
-                var feed = group.FirstOrDefault(x => x.GetId() == item.GetId());
+                var feed = group.FirstOrDefault(x => x.Id == item.Id);
                 if (feed != null)
                 {
                     group.Remove(feed);

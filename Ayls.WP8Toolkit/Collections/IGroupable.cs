@@ -2,7 +2,7 @@
 {
     public interface IGroupable
     {
-        string GetGroup();
-        string GetId();
+        string Id { get; set; }
+        string Group { get; set; }
     }
 }
