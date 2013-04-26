@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Windows.Input;
 
 namespace Ayls.WP8Toolkit.Commands
 {
-    public class DelegateCommand : ICommand
+    public class DelegateCommand : BaseCommand
     {
         readonly Func<object, bool> _canExecute;
         readonly Action<object> _executeAction;
@@ -23,7 +22,7 @@ namespace Ayls.WP8Toolkit.Commands
             _canExecute = canExecute;
         }
 
-        public bool CanExecute(object parameter)
+        public override bool CanExecute(object parameter)
         {
             var result = true;
             if (_canExecute != null)
@@ -34,17 +33,7 @@ namespace Ayls.WP8Toolkit.Commands
             return result;
         }
 
-        public event EventHandler CanExecuteChanged;
-
-        public void RaiseCanExecuteChanged()
-        {
-            if (CanExecuteChanged != null)
-            {
-                CanExecuteChanged(this, new EventArgs());
-            }
-        }
-
-        public void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             this._executeAction(parameter);
         }

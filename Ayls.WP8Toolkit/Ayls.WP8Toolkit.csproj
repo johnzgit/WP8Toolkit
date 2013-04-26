@@ -86,8 +86,10 @@
     <Compile Include="Collections\GroupCollection.cs" />
     <Compile Include="Collections\GroupItem.cs" />
     <Compile Include="Collections\IGroupable.cs" />
+    <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Converters\BooleanToStringConverter.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\StringToUpperCaseConverter.cs" />
     <Compile Include="Converters\StringToLowerCaseConverter.cs" />
     <Compile Include="Converters\FuncToStringConverter.cs" />
