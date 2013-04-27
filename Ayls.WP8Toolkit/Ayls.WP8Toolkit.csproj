@@ -87,7 +87,7 @@
     <Compile Include="Collections\GroupItem.cs" />
     <Compile Include="Collections\IGroupable.cs" />
     <Compile Include="Commands\BaseCommand.cs" />
-    <Compile Include="Commands\DelegateCommand.cs" />
+    <Compile Include="Controls\HorizontalEndlessScrollListBox.cs" />
     <Compile Include="Controls\ImmediateUpdateSourceTextBox.cs" />
     <Compile Include="Controls\IndeterminateProgressBar.cs" />
     <Compile Include="Converters\BooleanToStringConverter.cs" />
