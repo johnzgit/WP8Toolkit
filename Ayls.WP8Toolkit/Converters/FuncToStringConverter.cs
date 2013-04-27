@@ -4,11 +4,11 @@ using System.Windows.Data;
 
 namespace Ayls.WP8Toolkit.Converters
 {
-    public class FuncToStringConverter : IValueConverter
+    public abstract class FuncToStringConverter : IValueConverter
     {
         private readonly Func<object, string> _func;
 
-        public FuncToStringConverter(Func<object, string> func)
+        protected FuncToStringConverter(Func<object, string> func)
         {
             _func = func;
         }

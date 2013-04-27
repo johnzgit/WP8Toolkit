@@ -8,48 +8,29 @@ namespace Ayls.WP8Toolkit.LiveTile
 {
     public class LiveTileAgentManager : INotifyPropertyChanged
     {
-        private readonly ILiveTileSettings _settings;
-        private bool _resettedAlready = false;
+        private readonly string _agentName;
+        private readonly string _agentDescription;
 
-        public LiveTileAgentManager(ILiveTileSettings settings)
+        public LiveTileAgentManager(string agentName, string agentDescription)
         {
-            _settings = settings;
+            _agentName = agentName;
+            _agentDescription = agentDescription;
         }
 
-        public bool IsAgentEnabled { 
-            get { return _settings.IsLiveTileEnabled; }
-            private set { _settings.IsLiveTileEnabled = value; } 
-        }
-
-        public void ResetSchedule()
-        {
-            if (!_resettedAlready)
-            {
-                if (_settings.IsLiveTileEnabled)
-                {
-                    StartPeriodicAgent();
-                }
-                else
-                {
-                    RemoveAgent();
-                }
-
-                _resettedAlready = true;
-            }
-        }
+        public bool IsAgentEnabled { get; private set; }
 
         public LiveTileStartupResult StartPeriodicAgent()
         {
             var result = LiveTileStartupResult.Ok;
 
-            var periodicTask = ScheduledActionService.Find(_settings.LiveTileAgentName) as PeriodicTask;
+            var periodicTask = ScheduledActionService.Find(_agentName) as PeriodicTask;
             if (periodicTask != null)
             {
                 RemoveAgent();
             }
 
-            periodicTask = new PeriodicTask(_settings.LiveTileAgentName);
-            periodicTask.Description = _settings.LiveTileAgentDescription;
+            periodicTask = new PeriodicTask(_agentName);
+            periodicTask.Description = _agentDescription;
 
             try
             {
@@ -58,7 +39,7 @@ namespace Ayls.WP8Toolkit.LiveTile
 
                 // If debugging is enabled, use LaunchForTest to launch the agent in one minute.
 #if(DEBUG_AGENT)
-                ScheduledActionService.LaunchForTest(_settings.LiveTileAgentName, TimeSpan.FromSeconds(30));
+                ScheduledActionService.LaunchForTest(_agentName, TimeSpan.FromSeconds(30));
 #endif
             }
             catch (InvalidOperationException exception)
@@ -86,7 +67,7 @@ namespace Ayls.WP8Toolkit.LiveTile
             try
             {
                 UpdatePrimaryTileBadge(0);
-                ScheduledActionService.Remove(_settings.LiveTileAgentName);
+                ScheduledActionService.Remove(_agentName);
             }
             catch
             {

@@ -5,11 +5,11 @@ using System.Windows.Data;
 
 namespace Ayls.WP8Toolkit.Converters
 {
-    public class FuncToVisibilityConverter : IValueConverter
+    public abstract class FuncToVisibilityConverter : IValueConverter
     {
         private readonly Func<object, bool> _func;
 
-        public FuncToVisibilityConverter(Func<object, bool> func)
+        protected FuncToVisibilityConverter(Func<object, bool> func)
         {
             _func = func;
         }
