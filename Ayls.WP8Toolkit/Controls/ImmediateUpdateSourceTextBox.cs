@@ -14,7 +14,7 @@ namespace Ayls.WP8Toolkit.Controls
             var textBox = d as TextBox;
             if (textBox != null)
             {
-                textBox.Text = (string)e.NewValue;
+                textBox.Text = e.NewValue != null ? (string) e.NewValue : string.Empty;
             }
         }
 
