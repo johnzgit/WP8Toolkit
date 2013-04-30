@@ -21,9 +21,19 @@ namespace Ayls.WP8Toolkit.Controls
 
         public HorizontalEndlessScrollListBox()
         {
+            DefaultStyleKey = typeof(HorizontalEndlessScrollListBox);
             Loaded += ListBox_Loaded;
         }
 
+        public static readonly DependencyProperty ScrollAreaWidthProperty =
+            DependencyProperty.Register("ScrollAreaWidth", typeof(int), typeof(HorizontalEndlessScrollListBox), new PropertyMetadata(0));
+
+        public int ScrollAreaWidth
+        {
+            get { return (int)GetValue(ScrollAreaWidthProperty); }
+            set { SetValue(ScrollAreaWidthProperty, value); }
+        }
+        
         public static readonly DependencyProperty LoadNextCommandProperty =
             DependencyProperty.Register("LoadNextCommand", typeof(ICommand), typeof(HorizontalEndlessScrollListBox), new PropertyMetadata(null));
 
