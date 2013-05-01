@@ -36,11 +36,24 @@
                             <vsm:VisualStateGroup x:Name="HorizontalCompression">
                                 <vsm:VisualState x:Name="NoHorizontalCompression" />
                                 <vsm:VisualState x:Name="CompressionLeft" />
-                                <vsm:VisualState x:Name="CompressionRight" />
+                                <vsm:VisualState x:Name="CompressionRight">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="LoadNextIndicator" Storyboard.TargetProperty="Opacity" To="0.5" Duration="0" />
+                                    </Storyboard>
+                                </vsm:VisualState>
                             </vsm:VisualStateGroup>
                         </vsm:VisualStateManager.VisualStateGroups>
                         <Grid Margin="{TemplateBinding Padding}">
                             <ScrollContentPresenter x:Name="ScrollContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
+                            <TextBlock x:Name="LoadNextIndicator"
+                                       Text="pull to load more"
+                                       FontSize="20"
+                                       Foreground="White"
+                                       HorizontalAlignment="Right"
+                                       VerticalAlignment="Top"
+                                       Margin="0,-30,10,0"
+                                       Opacity="0">
+                            </TextBlock>
                             <ScrollBar x:Name="VerticalScrollBar" IsHitTestVisible="False" Opacity="0" Height="Auto" Width="5" HorizontalAlignment="Right" VerticalAlignment="Stretch" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" IsTabStop="False" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Value="{TemplateBinding VerticalOffset}" Orientation="Vertical" ViewportSize="{TemplateBinding ViewportHeight}" />
                             <ScrollBar x:Name="HorizontalScrollBar" IsHitTestVisible="False" Opacity="0" Width="Auto" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" IsTabStop="False" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Value="{TemplateBinding HorizontalOffset}" Orientation="Horizontal" ViewportSize="{TemplateBinding ViewportWidth}" />
                         </Grid>
@@ -72,6 +85,9 @@
                                       Style="{StaticResource ScrollViewerStyle}">
                             <ItemsPresenter/>
                         </ScrollViewer>
+                        <ContentPresenter x:Name="EmptyContentPresenter" 
+                                          Content="{TemplateBinding EmptyContent}" 
+                                          ContentTemplate="{TemplateBinding EmptyContentTemplate}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

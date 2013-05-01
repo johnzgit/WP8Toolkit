@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,9 +13,10 @@ namespace Ayls.WP8Toolkit.Controls
         private const string CompressionRightState = "CompressionRight";
         private const string NoHorizonatalCompressionState = "NoHorizontalCompression";
         private const string HorizontalCompressionGroupName = "HorizontalCompression";
-        private const int PullDownInterval = 1;
+        private const int PullInterval = 1;
 
         private ScrollViewer _scrollViewer = null;
+        private ContentPresenter _emptyContentPresenter;
         private bool _alreadyHookedScrollEvents = false;
         private DispatcherTimer _addToHeadTimer;
         private bool _refresh = false;
@@ -33,7 +35,25 @@ namespace Ayls.WP8Toolkit.Controls
             get { return (int)GetValue(ScrollAreaWidthProperty); }
             set { SetValue(ScrollAreaWidthProperty, value); }
         }
-        
+
+        public static readonly DependencyProperty EmptyContentProperty =
+            DependencyProperty.Register("EmptyContent", typeof(object), typeof(HorizontalEndlessScrollListBox), null);
+  
+        public object EmptyContent 
+        {
+            get { return GetValue(EmptyContentProperty); }
+            set { SetValue(EmptyContentProperty, value); }
+        }
+ 
+        public static readonly DependencyProperty EmptyContentTemplateProperty =
+            DependencyProperty.Register("EmptyContentTemplate", typeof(DataTemplate), typeof(HorizontalEndlessScrollListBox), null);
+
+        public DataTemplate EmptyContentTemplate
+        {
+            get { return (DataTemplate)GetValue(EmptyContentTemplateProperty); }
+            set { SetValue(EmptyContentTemplateProperty, value); }
+        }
+
         public static readonly DependencyProperty LoadNextCommandProperty =
             DependencyProperty.Register("LoadNextCommand", typeof(ICommand), typeof(HorizontalEndlessScrollListBox), new PropertyMetadata(null));
 
@@ -50,8 +70,8 @@ namespace Ayls.WP8Toolkit.Controls
 
             _alreadyHookedScrollEvents = true;
 
-            _scrollViewer = (ScrollViewer)FindElementRecursive(this, typeof(ScrollViewer));
-
+            _scrollViewer = (ScrollViewer)GetTemplateChild("ScrollViewer");
+            _emptyContentPresenter = (ContentPresenter)GetTemplateChild("EmptyContentPresenter");
             if (_scrollViewer != null)
             {
                 // Visual States are always on the first child of the control template 
@@ -59,10 +79,26 @@ namespace Ayls.WP8Toolkit.Controls
                 if (element != null)
                 {
                     VisualStateGroup horizontalGroup = FindVisualState(element, HorizontalCompressionGroupName);
-
                     if (horizontalGroup != null)
+                    {
                         horizontalGroup.CurrentStateChanging += HorizontalGroupCurrentStateChanging;
+                    }
                 }
+            }
+        }
+
+        protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
+        {
+            base.OnItemsChanged(e);
+
+            ApplyTemplate();
+
+            if (_scrollViewer != null)
+            {
+                var hasItems = Items.Count > 0;
+
+                _emptyContentPresenter.Visibility = hasItems ? Visibility.Collapsed : Visibility.Visible;
+                _scrollViewer.Visibility = hasItems ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
@@ -72,7 +108,7 @@ namespace Ayls.WP8Toolkit.Controls
             {
                 _addToHeadTimer = new DispatcherTimer();
                 _refresh = false;
-                _addToHeadTimer.Interval = TimeSpan.FromSeconds(PullDownInterval);
+                _addToHeadTimer.Interval = TimeSpan.FromSeconds(PullInterval);
                 _addToHeadTimer.Tick += (s, ea) => { _refresh = true; };
                 _addToHeadTimer.Start();
             }
@@ -91,28 +127,6 @@ namespace Ayls.WP8Toolkit.Controls
                     }
                 }
             }
-        }
-
-        private static UIElement FindElementRecursive(FrameworkElement parent, Type targetType)
-        {
-            int childCount = VisualTreeHelper.GetChildrenCount(parent);
-            UIElement returnElement = null;
-
-            if (childCount > 0)
-                for (int i = 0; i < childCount; i++)
-                {
-                    Object element = VisualTreeHelper.GetChild(parent, i);
-                    if (element.GetType() == targetType)
-                    {
-                        return element as UIElement;
-                    }
-                    else
-                    {
-                        returnElement = FindElementRecursive(VisualTreeHelper.GetChild(parent, i) as FrameworkElement, targetType);
-                    }
-                }
-
-            return returnElement;
         }
 
         private static VisualStateGroup FindVisualState(FrameworkElement element, string name)
