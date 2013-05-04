@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using Ayls.WP8Toolkit.Linq;
 
 namespace Ayls.WP8Toolkit.Controls
 {
-    public class HorizontalEndlessScrollListBox : ListBox
+    public class InfiniteScrollPanoramaListBox : ListBox
     {
         private const string CompressionRightState = "CompressionRight";
         private const string NoHorizonatalCompressionState = "NoHorizontalCompression";
@@ -21,14 +23,14 @@ namespace Ayls.WP8Toolkit.Controls
         private DispatcherTimer _addToHeadTimer;
         private bool _refresh = false;
 
-        public HorizontalEndlessScrollListBox()
+        public InfiniteScrollPanoramaListBox()
         {
-            DefaultStyleKey = typeof(HorizontalEndlessScrollListBox);
+            DefaultStyleKey = typeof(InfiniteScrollPanoramaListBox);
             Loaded += ListBox_Loaded;
         }
 
         public static readonly DependencyProperty ScrollAreaWidthProperty =
-            DependencyProperty.Register("ScrollAreaWidth", typeof(int), typeof(HorizontalEndlessScrollListBox), new PropertyMetadata(0));
+            DependencyProperty.Register("ScrollAreaWidth", typeof(int), typeof(InfiniteScrollPanoramaListBox), new PropertyMetadata(0));
 
         public int ScrollAreaWidth
         {
@@ -36,26 +38,35 @@ namespace Ayls.WP8Toolkit.Controls
             set { SetValue(ScrollAreaWidthProperty, value); }
         }
 
+        public static readonly DependencyProperty TitleContentProperty =
+            DependencyProperty.Register("TitleContent", typeof(object), typeof(InfiniteScrollPanoramaListBox), null);
+
+        public object TitleContent
+        {
+            get { return GetValue(TitleContentProperty); }
+            set { SetValue(TitleContentProperty, value); }
+        }
+
+        public static readonly DependencyProperty LoadNextIndicatorContentProperty =
+            DependencyProperty.Register("LoadNextIndicatorContent", typeof(object), typeof(InfiniteScrollPanoramaListBox), null);
+
+        public object LoadNextIndicatorContent 
+        {
+            get { return GetValue(LoadNextIndicatorContentProperty); }
+            set { SetValue(LoadNextIndicatorContentProperty, value); }
+        }
+
         public static readonly DependencyProperty EmptyContentProperty =
-            DependencyProperty.Register("EmptyContent", typeof(object), typeof(HorizontalEndlessScrollListBox), null);
-  
-        public object EmptyContent 
+            DependencyProperty.Register("EmptyContent", typeof(object), typeof(InfiniteScrollPanoramaListBox), null);
+
+        public object EmptyContent
         {
             get { return GetValue(EmptyContentProperty); }
             set { SetValue(EmptyContentProperty, value); }
         }
- 
-        public static readonly DependencyProperty EmptyContentTemplateProperty =
-            DependencyProperty.Register("EmptyContentTemplate", typeof(DataTemplate), typeof(HorizontalEndlessScrollListBox), null);
-
-        public DataTemplate EmptyContentTemplate
-        {
-            get { return (DataTemplate)GetValue(EmptyContentTemplateProperty); }
-            set { SetValue(EmptyContentTemplateProperty, value); }
-        }
 
         public static readonly DependencyProperty LoadNextCommandProperty =
-            DependencyProperty.Register("LoadNextCommand", typeof(ICommand), typeof(HorizontalEndlessScrollListBox), new PropertyMetadata(null));
+            DependencyProperty.Register("LoadNextCommand", typeof(ICommand), typeof(InfiniteScrollPanoramaListBox), null);
 
         public ICommand LoadNextCommand
         {
@@ -74,16 +85,33 @@ namespace Ayls.WP8Toolkit.Controls
             _emptyContentPresenter = (ContentPresenter)GetTemplateChild("EmptyContentPresenter");
             if (_scrollViewer != null)
             {
-                // Visual States are always on the first child of the control template 
-                var element = VisualTreeHelper.GetChild(_scrollViewer, 0) as FrameworkElement;
-                if (element != null)
+                HookupScrollCompressionEvent(_scrollViewer);
+                SetLoadNextIndicatorContent(_scrollViewer);
+            }
+        }
+
+        private void HookupScrollCompressionEvent(ScrollViewer scrollViewer)
+        {
+            var element = VisualTreeHelper.GetChild(scrollViewer, 0) as FrameworkElement;
+            if (element != null)
+            {
+                VisualStateGroup horizontalGroup = FindVisualState(element, HorizontalCompressionGroupName);
+                if (horizontalGroup != null)
                 {
-                    VisualStateGroup horizontalGroup = FindVisualState(element, HorizontalCompressionGroupName);
-                    if (horizontalGroup != null)
-                    {
-                        horizontalGroup.CurrentStateChanging += HorizontalGroupCurrentStateChanging;
-                    }
+                    horizontalGroup.CurrentStateChanging += HorizontalGroupCurrentStateChanging;
                 }
+            }
+        }
+
+        private void SetLoadNextIndicatorContent(ScrollViewer scrollViewer)
+        {
+            var loadNextIndicator = scrollViewer.Descendants()
+                                                .OfType<ContentControl>()
+                                                .SingleOrDefault(s => s.Name == "LoadNextIndicator");
+
+            if (loadNextIndicator != null)
+            {
+                loadNextIndicator.Content = LoadNextIndicatorContent;
             }
         }
 

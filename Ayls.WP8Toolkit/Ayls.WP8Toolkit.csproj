@@ -87,15 +87,23 @@
     <Compile Include="Collections\GroupItem.cs" />
     <Compile Include="Collections\IGroupable.cs" />
     <Compile Include="Commands\BaseCommand.cs" />
-    <Compile Include="Controls\HorizontalEndlessScrollListBox.cs" />
+    <Compile Include="Controls\InfiniteScrollPanoramaListBox.cs" />
     <Compile Include="Controls\ImmediateUpdateSourceTextBox.cs" />
     <Compile Include="Controls\IndeterminateProgressBar.cs" />
+    <Compile Include="Converters\MinWidthMultibindingConverter.cs" />
+    <Compile Include="Linq\ILinqTree.cs" />
+    <Compile Include="Linq\EnumerableTreeExtensions.cs" />
     <Compile Include="Converters\BooleanToStringConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\StringToUpperCaseConverter.cs" />
     <Compile Include="Converters\StringToLowerCaseConverter.cs" />
     <Compile Include="Converters\FuncToStringConverter.cs" />
     <Compile Include="Converters\FuncToVisibilityConverter.cs" />
+    <Compile Include="Linq\TreeExtensions.cs" />
+    <Compile Include="Linq\VisualTreeAdapter.cs" />
+    <Compile Include="Multibinding\Disposer.cs" />
+    <Compile Include="Multibinding\IMultiValueConverter.cs" />
+    <Compile Include="Multibinding\MultiBinding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

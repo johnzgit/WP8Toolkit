@@ -4,7 +4,7 @@
     xmlns:controls="clr-namespace:Ayls.WP8Toolkit.Controls"
     xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
-    <Style TargetType="ScrollViewer" x:Name="ScrollViewerStyle">
+    <Style TargetType="ScrollViewer" x:Name="InfiniteScrollPanoramaListBoxScrollViewerStyle">
         <Setter Property="VerticalScrollBarVisibility" Value="Disabled" />
         <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="Background" Value="Transparent" />
@@ -45,15 +45,10 @@
                         </vsm:VisualStateManager.VisualStateGroups>
                         <Grid Margin="{TemplateBinding Padding}">
                             <ScrollContentPresenter x:Name="ScrollContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
-                            <TextBlock x:Name="LoadNextIndicator"
-                                       Text="pull to load more"
-                                       FontSize="20"
-                                       Foreground="White"
-                                       HorizontalAlignment="Right"
-                                       VerticalAlignment="Top"
-                                       Margin="0,-30,10,0"
-                                       Opacity="0">
-                            </TextBlock>
+                            <ContentControl x:Name="LoadNextIndicator" 
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            Opacity="0" />
                             <ScrollBar x:Name="VerticalScrollBar" IsHitTestVisible="False" Opacity="0" Height="Auto" Width="5" HorizontalAlignment="Right" VerticalAlignment="Stretch" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" IsTabStop="False" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Value="{TemplateBinding VerticalOffset}" Orientation="Vertical" ViewportSize="{TemplateBinding ViewportHeight}" />
                             <ScrollBar x:Name="HorizontalScrollBar" IsHitTestVisible="False" Opacity="0" Width="Auto" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" IsTabStop="False" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Value="{TemplateBinding HorizontalOffset}" Orientation="Horizontal" ViewportSize="{TemplateBinding ViewportWidth}" />
                         </Grid>
@@ -62,7 +57,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style TargetType="controls:HorizontalEndlessScrollListBox">
+    <Style TargetType="controls:InfiniteScrollPanoramaListBox">
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="ItemsPanel">
@@ -74,7 +69,7 @@
         </Setter>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="controls:HorizontalEndlessScrollListBox">
+                <ControlTemplate TargetType="controls:InfiniteScrollPanoramaListBox">
                     <Grid>
                         <ScrollViewer x:Name="ScrollViewer" 
                                       BorderBrush="{TemplateBinding BorderBrush}" 
@@ -82,12 +77,15 @@
                                       Background="{TemplateBinding Background}" 
                                       Foreground="{TemplateBinding Foreground}" 
                                       Padding="{TemplateBinding Padding}"
-                                      Style="{StaticResource ScrollViewerStyle}">
-                            <ItemsPresenter/>
+                                      Style="{StaticResource InfiniteScrollPanoramaListBoxScrollViewerStyle}">
+                            <toolkit:WrapPanel Orientation="Vertical">
+                                <ContentPresenter x:Name="TitleContentPresenter" 
+                                              Content="{TemplateBinding TitleContent}" />
+                                <ItemsPresenter/>
+                            </toolkit:WrapPanel>
                         </ScrollViewer>
                         <ContentPresenter x:Name="EmptyContentPresenter" 
-                                          Content="{TemplateBinding EmptyContent}" 
-                                          ContentTemplate="{TemplateBinding EmptyContentTemplate}" />
+                                          Content="{TemplateBinding EmptyContent}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
