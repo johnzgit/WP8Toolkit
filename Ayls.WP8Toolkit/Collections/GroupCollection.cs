@@ -73,12 +73,6 @@ namespace Ayls.WP8Toolkit.Collections
 
                 NotifyPropertyChanged("HasItems");
             }
-        }
-
-        public void MoveGroupedItem(T oldItem, T newItem)
-        {
-            RemoveGroupedItem(oldItem);
-            AddGroupedItem(newItem);
             CleanupGroups();
         }
 
@@ -92,6 +86,12 @@ namespace Ayls.WP8Toolkit.Collections
                     this.Remove(group);
                 }
             }
+        }
+
+        public void MoveGroupedItem(T oldItem, T newItem)
+        {
+            RemoveGroupedItem(oldItem);
+            AddGroupedItem(newItem);
         }
 
         private void NotifyPropertyChanged(string propertyName)
