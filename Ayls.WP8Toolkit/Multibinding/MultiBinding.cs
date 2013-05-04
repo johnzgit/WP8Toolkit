@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Globalization;
 
@@ -11,11 +12,6 @@ namespace Ayls.WP8Toolkit.Multibinding
     {
         private bool _suppressWriteBack = false;
         private bool _ready = false;
-
-        public MultiBinding()
-        {
-            Loaded += delegate { _ready = true; };
-        }
 
         public object Output
         {
@@ -179,7 +175,7 @@ namespace Ayls.WP8Toolkit.Multibinding
 
         private void UpdateOutput()
         {
-            if (!_ready)
+            if (DesignerProperties.IsInDesignTool)
             {
                 return;
             }

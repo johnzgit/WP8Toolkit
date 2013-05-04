@@ -10,9 +10,10 @@ namespace Ayls.WP8Toolkit.Converters
             var minWidth = 0;
             foreach (var value in values)
             {
+                if (value == null) continue;
+      
                 var width = int.Parse(value.ToString());
-                if (width > minWidth)
-                    minWidth = width;
+                if (width > minWidth) minWidth = width;
             }
 
             return minWidth;

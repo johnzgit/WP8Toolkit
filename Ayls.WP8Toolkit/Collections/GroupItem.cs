@@ -4,11 +4,13 @@ namespace Ayls.WP8Toolkit.Collections
 {
     public class GroupItem<T> : ObservableCollection<T>
     {
-        public delegate string GetKeyDelegate(T item);
+        public string Key { get; set; }
 
-        public string Key { get; private set; }
+        public GroupItem()
+        {
+        }
 
-        public GroupItem(string key)
+        public GroupItem(string key) : this ()
         {
             Key = key;
         }

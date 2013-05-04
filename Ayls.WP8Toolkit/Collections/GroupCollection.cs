@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 
@@ -38,6 +39,11 @@ namespace Ayls.WP8Toolkit.Collections
             get { return new ObservableCollection<string>(this.Select(x => x.Key).Distinct()); }
         }
 
+        public bool HasItems
+        {
+            get { return AllItems.Any(); }
+        }
+
         public IEnumerable<T> AllItems
         {
             get 
@@ -49,6 +55,7 @@ namespace Ayls.WP8Toolkit.Collections
         public void AddGroupedItem(T item)
         {
             AddGroupedItem(this, item);
+            NotifyPropertyChanged("HasItems");
         }
 
         public void RemoveGroupedItem(T item)
@@ -58,11 +65,13 @@ namespace Ayls.WP8Toolkit.Collections
 
             if (group != null)
             {
-                var feed = group.FirstOrDefault(x => x.Id == item.Id);
-                if (feed != null)
+                var existingItem = group.FirstOrDefault(x => x.Id == item.Id);
+                if (existingItem != null)
                 {
-                    group.Remove(feed);
+                    group.Remove(existingItem);
                 }
+
+                NotifyPropertyChanged("HasItems");
             }
         }
 
@@ -83,6 +92,11 @@ namespace Ayls.WP8Toolkit.Collections
                     this.Remove(group);
                 }
             }
+        }
+
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            base.OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
         }
     }
 }
