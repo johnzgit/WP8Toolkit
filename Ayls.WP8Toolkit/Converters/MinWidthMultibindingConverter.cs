@@ -7,7 +7,7 @@ namespace Ayls.WP8Toolkit.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var minWidth = 0;
+            var minWidth = parameter != null ? int.Parse(parameter.ToString()) : 0;
             foreach (var value in values)
             {
                 if (value == null) continue;

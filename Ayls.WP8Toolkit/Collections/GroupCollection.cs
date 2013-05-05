@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
 
 namespace Ayls.WP8Toolkit.Collections
 {
     public class GroupCollection<T> : ObservableCollection<GroupItem<T>> where T : IGroupable
     {
-        public static GroupCollection<T> CreateGroups(IEnumerable<T> items, CultureInfo ci)
+        public static GroupCollection<T> CreateGroups(IEnumerable<T> items, IComparer<string> comparer)
         {
-            var list = new GroupCollection<T>();
+            var list = new GroupCollection<T>() {GroupComparer = comparer};
 
             foreach (T item in items)
             {
@@ -28,11 +27,58 @@ namespace Ayls.WP8Toolkit.Collections
             if (group == null)
             {
                 group = new GroupItem<T>(itemKey);
-                list.Add(group);
+
+                var groupIndex = GetIndexToInsertGroupAt(list, group);
+                if (groupIndex < list.Count)
+                {
+                    list.Insert(groupIndex, group);  
+                }
+                else
+                {
+                    list.Add(group);
+                }
             }
 
-            group.Add(item);
+            var itemIndex = GetIndexToInsertGroupItemAt(group, item);
+            if (itemIndex < group.Count)
+            {
+                group.Insert(itemIndex, item);
+            }
+            else
+            {
+                group.Add(item);   
+            }
         }
+
+        private static int GetIndexToInsertGroupAt(GroupCollection<T> list, GroupItem<T> newGroup)
+        {
+            var tempList = new GroupCollection<T>();
+            foreach (var g in list)
+            {
+                tempList.Add(g);
+            }
+            tempList.Add(newGroup);
+
+            var tempSortedList = tempList.OrderBy(x => x.Key, list.GroupComparer).ToList();
+
+            return tempSortedList.IndexOf(newGroup);
+        }
+
+        private static int GetIndexToInsertGroupItemAt(GroupItem<T> group, T newItem)
+        {
+            var tempGroup = new GroupItem<T>();
+            foreach (var item in group)
+            {
+                tempGroup.Add(item);
+            }
+            tempGroup.Add(newItem);
+
+            var tempSortedList = tempGroup.OrderBy(x => x.Title).ToList();
+
+            return tempSortedList.IndexOf(newItem);
+        }
+
+        public IComparer<string> GroupComparer { get; protected set; }
 
         public ObservableCollection<string> Groups
         {

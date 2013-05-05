@@ -79,9 +79,9 @@
                                       Padding="{TemplateBinding Padding}"
                                       Style="{StaticResource InfiniteScrollPanoramaListBoxScrollViewerStyle}">
                             <toolkit:WrapPanel Orientation="Vertical">
-                                <ContentPresenter x:Name="TitleContentPresenter" 
-                                              Content="{TemplateBinding TitleContent}" />
-                                <ItemsPresenter/>
+                                <ContentPresenter x:Name="TitleContentPresenter"
+                                                  Content="{TemplateBinding TitleContent}" />
+                                <ItemsPresenter x:Name="ItemsContentPresenter"/>
                             </toolkit:WrapPanel>
                         </ScrollViewer>
                         <ContentPresenter x:Name="EmptyContentPresenter" 

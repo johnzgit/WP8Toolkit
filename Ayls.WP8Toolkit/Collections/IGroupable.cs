@@ -4,5 +4,6 @@
     {
         string Id { get; set; }
         string Group { get; set; }
+        string Title { get; set; }
     }
 }
